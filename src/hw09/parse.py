@@ -23,7 +23,6 @@ def parse_url_author(url_data: str) -> dict:
     css_born = "div.author-details span.author-born-date"
     css_born_location = "div.author-details span.author-born-location"
     css_desc = "div.author-description"
-    # print(url)
     html_doc = requests.get(url)
     if html_doc.status_code != 200:
         return result, next
@@ -49,7 +48,6 @@ def parse_url_quotes(url: str) -> tuple[list[dict], next]:
     if not url:
         return result, next
     css_selector_next = "nav .next > a"
-    # print(url)
     html_doc = requests.get(url)
     if html_doc.status_code != 200:
         return result, next
@@ -112,10 +110,6 @@ def parse_data_authors(
             author_link = author.get("author_link")
             url = base_url + author_link
             urls.add((url, author_name))
-            # author_info = parse_url_author((url, author_name))
-            # store_.append(author_info)
-    # pprint(urls)
-
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = executor.map(parse_url_author, urls)
 
@@ -153,15 +147,11 @@ def main():
     print("> Get Quotes")
     data_quotes = parse_data_quotes(max_records=None)
     print(f"< Loaded Quotes: {len(data_quotes)}")
-    # pprint(data_quotes)
-    # print("-" * 120)
     print("> Get Authors (ThreadPool)")
     data_authors = parse_data_authors(data_quotes)
     print(f"< Loaded Authors: {len(data_authors)}")
-    # pprint(data_authors)
     print("= Tune Authors Names on Quotes")
     data_quotes = correction_quotes_author_name(data_quotes, data_authors)
-    # pprint(data_quotes)
     print("> Save json files for Authors and Quotes")
     quotes_path = json_dest.joinpath("quotes.json")
     authors_path = json_dest.joinpath("authors.json")

@@ -77,10 +77,6 @@ class QuotesAuthorPipeline:
 
 class QuotesAuthorSpider(scrapy.Spider):
     name = "quotes_authors"
-    # custom_settings = {
-    #     "FEED_FORMAT": "json",
-    #     "FEED_URI": str(json_dest.joinpath(f"{name}.json")),
-    # }
     custom_settings = {"ITEM_PIPELINES": {QuotesAuthorPipeline: 300}}
     allowed_domains = ["quotes.toscrape.com"]
     start_urls = ["https://quotes.toscrape.com"]
@@ -125,7 +121,6 @@ if __name__ == "__main__":
     process = CrawlerProcess()
     logger_pymongo = logging.getLogger("pymongo")
     logger_pymongo.setLevel(logging.ERROR)
-    # run spider
     logger_scrapy = logging.getLogger("scrapy")
     logger_scrapy.setLevel(logging.ERROR)   
     logger_urllib = logging.getLogger("urllib3")

@@ -29,7 +29,5 @@ else:
 print(f"{URI=}")
 
 if __name__ == "__main__":
-
-    # client = pymongo.MongoClient(URI)
-
+    
     print(f"{client=}")
